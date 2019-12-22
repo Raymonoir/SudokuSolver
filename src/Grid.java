@@ -31,11 +31,12 @@ public class Grid
 {
 	GridCell [][] gridArray;
 	int [][] numberGrid;
+	                       
 	
 	
 	Grid(int [][] sudoku)
 	{
-		int [][] numberGrid = sudoku;
+		numberGrid = sudoku;
 		formGridArray();
 		
 	}
@@ -49,16 +50,33 @@ public class Grid
 		{
 			for (int col = 0; col < numberGrid[row].length; col ++)
 			{
-				gridArray[row][col] = new GridCell(numberGrid[row][col]);
-				
-				int rowMod = row%3;
-				int colMod = col%3;
-				
+				gridArray[row][col] = new GridCell(numberGrid[row][col]);		
 				
 			}
 			
 		}
 		
+	}
+	
+	public boolean valid(int row, int col)
+	{
+		return checkRow(row,col) && checkColumn(row,col) && checkBox(row,col);
+	
+	}
+	
+	
+	public void outputGrid()
+	{
+		System.out.println("-------------------------");
+		for (int row = 0; row < 9; row ++)
+		{
+			System.out.println("| " + gridArray[row][0].getVal() + " " + gridArray[row][1].getVal() + " " + gridArray[row][2].getVal() + " | " + gridArray[row][3].getVal()+ " " + gridArray[row][4].getVal() + " "+ gridArray[row][5].getVal() + " | " + gridArray[row][6].getVal()+ " " + gridArray[row][7].getVal() + " "+ gridArray[row][8].getVal() + " | ");
+			
+			if ((row + 1) % 3 == 0)
+			{
+				System.out.println("-------------------------");
+			}
+		}
 	}
 	
 	private boolean checkRow (int row, int col)
@@ -80,8 +98,10 @@ public class Grid
 	{
 		boolean valid = true;
 		for (int x = 0; x < numberGrid[row].length; x++)
+			
+			
 		{
-			if (x !=row && gridArray[x][col].getVal() == gridArray[row][col].getVal())
+			if (x != row && gridArray[x][col].getVal() == gridArray[row][col].getVal())
 			{
 				valid = false;
 			}
@@ -94,6 +114,22 @@ public class Grid
 	private boolean checkBox (int row, int col)
 	{
 		boolean valid = true;
+		
+		int boxRow = Math.floorDiv(row, 3); // row of box
+		int boxCol = Math.floorDiv(col, 3); // column of box
+		
+		for (int x = boxRow * 3; x < boxRow*3 +3; x ++)
+		{
+			for (int y = boxCol * 3; y < boxCol*3 +3; y++)
+			{
+				if ((gridArray[row][col].getVal() == gridArray[x][y].getVal()) && (x != row || y != col))
+				{
+					valid = false;
+				}
+				
+			}
+			
+		}
 		
 		return valid;
 	}
