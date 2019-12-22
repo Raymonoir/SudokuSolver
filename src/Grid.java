@@ -4,6 +4,11 @@
  * @author raymonoir
  * 
  * 
+ * i = row
+ * j = column
+ * 
+ * 
+ * 
  * BACKTRACKING ALGORITHM
  * 
  * if 0, increment
@@ -40,11 +45,15 @@ public class Grid
 	{
 		gridArray  = new GridCell [9][9];
 		
-		for (int i = 0; i < numberGrid.length; i ++)
+		for (int row = 0; row < numberGrid.length; row ++)
 		{
-			for (int j = 0; j < numberGrid.length; j ++)
+			for (int col = 0; col < numberGrid[row].length; col ++)
 			{
-				gridArray[i][j] = new GridCell(numberGrid[i][j]);
+				gridArray[row][col] = new GridCell(numberGrid[row][col]);
+				
+				int rowMod = row%3;
+				int colMod = col%3;
+				
 				
 			}
 			
@@ -52,29 +61,49 @@ public class Grid
 		
 	}
 	
-	private boolean checkRow (int i, int j)
+	private boolean checkRow (int row, int col)
 	{
-		return false;
+		boolean valid = true;
+		
+		for (int x = 0; x < numberGrid.length; x ++ )
+		{
+			if (x != col && gridArray[row][x].getVal() == gridArray[row][col].getVal())
+			{
+				valid = false;
+			}
+		}
+		
+		return valid;
 	}
 	
-	private boolean checkColumn (int i, int j)
+	private boolean checkColumn (int row, int col)
 	{
-		return false;
+		boolean valid = true;
+		for (int x = 0; x < numberGrid[row].length; x++)
+		{
+			if (x !=row && gridArray[x][col].getVal() == gridArray[row][col].getVal())
+			{
+				valid = false;
+			}
+			 
+		}
+		return valid;
 		
 	}
 	
-	private boolean checkBox (int i, int j)
+	private boolean checkBox (int row, int col)
 	{
-		return false;
+		boolean valid = true;
+		
+		return valid;
 	}
 	
 	
-	private void backtrack (int i, int j)
+	private void backtrack (int row, int col)
 	{
-		if (gridArray[i][j].getVal() == 0)
-			gridArray[i][j].incVal();
+		if (gridArray[row][col].getVal() == 0)
+			gridArray[row][col].incVal();
 		
-		if ()
 		
 	}
 

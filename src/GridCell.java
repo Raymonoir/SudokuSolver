@@ -2,15 +2,27 @@
 public class GridCell 
 {
 	private int value;
-	private boolean given;
+	private boolean fixed;
+	private int square;
 	
 	
 	GridCell(int val)
 	{
+		if (val != 0)
+			fixed = true;
+		
 		value = val;
 	}
 	
+	public void setSqu (int squ)
+	{
+		square = squ;
+	}
 	
+	public int getSqu ()
+	{
+		return square;
+	}
 	
 	public int getVal ()
 	{
@@ -23,14 +35,9 @@ public class GridCell
 	}
 	
 	
-	public boolean getGiven ()
+	public boolean getFix ()
 	{
-		return given;
-	}
-	
-	public void setGiven (boolean giv)
-	{
-		given = giv;
+		return fixed;
 	}
 
 }
