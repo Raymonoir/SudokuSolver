@@ -77,6 +77,8 @@ public class Grid
 				System.out.println("-------------------------");
 			}
 		}
+		
+		System.out.println();
 	}
 	
 	private boolean checkRow (int row, int col)
@@ -111,37 +113,54 @@ public class Grid
 		
 	}
 	
-	private int [] getPreviousCell (int row, int col)
+	public int [] getPreviousCell (int row, int col)
 	{
 		if (col == 0)
 		{
 			row = row -1;
 			col = 8;
 		}
+		else
+		{
+			col--;
+		}
 		
 		if (gridArray[row][col].getFix())
 		{
 			return getPreviousCell(row,col);
 		}
+		else
+		{
+			return new int [] {row,col};
+		}
 		
-		return new int [] {row,col};
+		
 	}
 	
 	
-	private int [] getNextCell (int row, int col)
+	public int [] getNextCell (int row, int col)
 	{
 		if (col == 8)
 		{
 			row = row + 1;
 			col = 0;
 		}
+		else
+		{
+			col++;
+		}
 		
 		if (gridArray[row][col].getFix())
 		{
 			return getNextCell(row,col);
 		}
+		else
+		{
+			return new int [] {row,col};
+		}
 		
-		return new int [] {row,col};
+
+		
 		
 	}
 	
@@ -168,62 +187,61 @@ public class Grid
 		return valid;
 	}
 	
-	
-	public boolean backtrack (int row, int col)
+	public void startSolve()
 	{
-		if (!gridArray[row][col].getFix())
+		if (gridArray[0][0].getFix())
 		{
-			if (gridArray[row][col].getVal() == 0)
-				gridArray[row][col].incVal();
-			
-			if (!valid(row,col))
+			int [] pos = getNextCell(0,0);
+			backtrack(pos[0],pos[1]);
+		}
+		else
+		{
+			backtrack(0,0);
+		}
+	}
+	
+	
+	public void backtrack (int row, int col)
+	{
+		//outputGrid();
+		if (gridArray[row][col].getVal() == 0)
+			gridArray[row][col].incVal();
+		
+		if (valid(row,col))
+		{
+			int [] nextPos = getNextCell(row,col);
+			row = nextPos[0];
+			col = nextPos[1];
+			backtrack(row,col);	
+		}
+		else
+		{
+			if (gridArray[row][col].getVal() != 9)
 			{
-				if (gridArray[row][col].getVal() == 9)
-				{
-					gridArray[row][col].setVal(0);
-					int [] pos = getPreviousCell(row,col);
-					
-					row = pos[0];
-					col = pos[1];
-					
-					return backtrack(row,col);
-					
-				}
-				else
-				{
-					gridArray[row][col].incVal();
-					return backtrack(row,col);
-				}
+				
+				
 			}
 			else
 			{
-				int [] pos = getNextCell(row,col);
+				gridArray[row][col].setVal(0);
+				int [] prevPos = getPreviousCell(row,col);
+				row = prevPos[0];
+				col = prevPos[1];
 				
-				row = pos[0];
-				col = pos[1];
-				
-				
-				
-				if (row ==8 && col == 8)
-				{
-					outputGrid();
-					return true;
-					
-				}
-				else
-				{
-					backtrack(row,col);
-				}
-				
-				
+				backtrack(row,col);
 			}
 			
 		}
-		return false;
 		
-		
+		if (row == 8 && col == 8)
+		{
+			outputGrid();
+		}
 		
 		
 	}
-
+		
+		
+		
+		
 }

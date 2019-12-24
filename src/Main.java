@@ -15,7 +15,9 @@ public class Main {
 								{0,0,0,0,8,0,0,7,9}};
 		
 		Grid g = new Grid(numberGrid);
-		g.backtrack(0,0);
+		g.startSolve();
+		
+		
 
 	}
 
