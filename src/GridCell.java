@@ -14,16 +14,6 @@ public class GridCell
 		value = val;
 	}
 	
-	public void setSqu (int squ)
-	{
-		square = squ;
-	}
-	
-	public int getSqu ()
-	{
-		return square;
-	}
-	
 	public int getVal ()
 	{
 		return value;
@@ -32,6 +22,11 @@ public class GridCell
 	public void incVal()
 	{
 		value++;
+	}
+	
+	public void setVal(int val)
+	{
+		value = val;
 	}
 	
 	

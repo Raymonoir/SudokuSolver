@@ -111,6 +111,40 @@ public class Grid
 		
 	}
 	
+	private int [] getPreviousCell (int row, int col)
+	{
+		if (col == 0)
+		{
+			row = row -1;
+			col = 8;
+		}
+		
+		if (gridArray[row][col].getFix())
+		{
+			return getPreviousCell(row,col);
+		}
+		
+		return new int [] {row,col};
+	}
+	
+	
+	private int [] getNextCell (int row, int col)
+	{
+		if (col == 8)
+		{
+			row = row + 1;
+			col = 0;
+		}
+		
+		if (gridArray[row][col].getFix())
+		{
+			return getNextCell(row,col);
+		}
+		
+		return new int [] {row,col};
+		
+	}
+	
 	private boolean checkBox (int row, int col)
 	{
 		boolean valid = true;
@@ -135,10 +169,59 @@ public class Grid
 	}
 	
 	
-	private void backtrack (int row, int col)
+	public boolean backtrack (int row, int col)
 	{
-		if (gridArray[row][col].getVal() == 0)
-			gridArray[row][col].incVal();
+		if (!gridArray[row][col].getFix())
+		{
+			if (gridArray[row][col].getVal() == 0)
+				gridArray[row][col].incVal();
+			
+			if (!valid(row,col))
+			{
+				if (gridArray[row][col].getVal() == 9)
+				{
+					gridArray[row][col].setVal(0);
+					int [] pos = getPreviousCell(row,col);
+					
+					row = pos[0];
+					col = pos[1];
+					
+					return backtrack(row,col);
+					
+				}
+				else
+				{
+					gridArray[row][col].incVal();
+					return backtrack(row,col);
+				}
+			}
+			else
+			{
+				int [] pos = getNextCell(row,col);
+				
+				row = pos[0];
+				col = pos[1];
+				
+				
+				
+				if (row ==8 && col == 8)
+				{
+					outputGrid();
+					return true;
+					
+				}
+				else
+				{
+					backtrack(row,col);
+				}
+				
+				
+			}
+			
+		}
+		return false;
+		
+		
 		
 		
 	}
