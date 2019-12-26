@@ -58,9 +58,9 @@ public class Grid
 		
 	}
 	
-	public boolean valid(int row, int col)
+	public boolean validPos(int row, int col, int val)
 	{
-		return checkRow(row,col) && checkColumn(row,col) && checkBox(row,col);
+		return checkRow(row,col,val) && checkColumn(row,col,val) && checkBox(row,col,val);
 	
 	}
 	
@@ -81,13 +81,13 @@ public class Grid
 		System.out.println();
 	}
 	
-	private boolean checkRow (int row, int col)
+	private boolean checkRow (int row, int col,int val)
 	{
 		boolean valid = true;
 		
 		for (int x = 0; x < numberGrid.length; x ++ )
 		{
-			if (x != col && gridArray[row][x].getVal() == gridArray[row][col].getVal())
+			if (x != col && gridArray[row][x].getVal() == val)
 			{
 				valid = false;
 			}
@@ -96,14 +96,14 @@ public class Grid
 		return valid;
 	}
 	
-	private boolean checkColumn (int row, int col)
+	private boolean checkColumn (int row, int col, int val)
 	{
 		boolean valid = true;
 		for (int x = 0; x < numberGrid[row].length; x++)
 			
 			
 		{
-			if (x != row && gridArray[x][col].getVal() == gridArray[row][col].getVal())
+			if (x != row && gridArray[x][col].getVal() == val)
 			{
 				valid = false;
 			}
@@ -137,6 +137,21 @@ public class Grid
 		
 	}
 	
+	private boolean checkSolve ()
+	{
+		boolean solved = true;
+		for (int row = 0; row < 9; row ++)
+		{
+			for (int col = 0; col < 9; col++)
+			{
+				if (gridArray[row][col].getVal() == 0)
+					solved = false;
+			}
+		}
+		
+		return solved;
+	}
+	
 	
 	public int [] getNextCell (int row, int col)
 	{
@@ -164,7 +179,7 @@ public class Grid
 		
 	}
 	
-	private boolean checkBox (int row, int col)
+	private boolean checkBox (int row, int col, int val)
 	{
 		boolean valid = true;
 		
@@ -175,7 +190,7 @@ public class Grid
 		{
 			for (int y = boxCol * 3; y < boxCol*3 +3; y++)
 			{
-				if ((gridArray[row][col].getVal() == gridArray[x][y].getVal()) && (x != row || y != col))
+				if ((val == gridArray[x][y].getVal()) && (x != row || y != col))
 				{
 					valid = false;
 				}
@@ -187,61 +202,19 @@ public class Grid
 		return valid;
 	}
 	
-	public void startSolve()
-	{
-		if (gridArray[0][0].getFix())
-		{
-			int [] pos = getNextCell(0,0);
-			backtrack(pos[0],pos[1]);
-		}
-		else
-		{
-			backtrack(0,0);
-		}
-	}
+
+
 	
 	
-	public void backtrack (int row, int col)
-	{
-		//outputGrid();
-		if (gridArray[row][col].getVal() == 0)
-			gridArray[row][col].incVal();
+
 		
-		if (valid(row,col))
-		{
-			int [] nextPos = getNextCell(row,col);
-			row = nextPos[0];
-			col = nextPos[1];
-			backtrack(row,col);	
-		}
-		else
-		{
-			if (gridArray[row][col].getVal() != 9)
-			{
-				
-				
-			}
-			else
-			{
-				gridArray[row][col].setVal(0);
-				int [] prevPos = getPreviousCell(row,col);
-				row = prevPos[0];
-				col = prevPos[1];
-				
-				backtrack(row,col);
-			}
+
+	
+		
+		
 			
-		}
-		
-		if (row == 8 && col == 8)
-		{
-			outputGrid();
-		}
-		
-		
-	}
-		
-		
-		
-		
 }
+		
+		
+		
+
