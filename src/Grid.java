@@ -81,7 +81,7 @@ public class Grid
 		System.out.println();
 	}
 	
-	private boolean checkRow (int row, int col,int val)
+	public boolean checkRow (int row, int col,int val)
 	{
 		boolean valid = true;
 		
@@ -96,7 +96,7 @@ public class Grid
 		return valid;
 	}
 	
-	private boolean checkColumn (int row, int col, int val)
+	public boolean checkColumn (int row, int col, int val)
 	{
 		boolean valid = true;
 		for (int x = 0; x < numberGrid[row].length; x++)
@@ -165,21 +165,24 @@ public class Grid
 			col++;
 		}
 		
+		//System.out.println("ROW IS NOW: " + row + "COL IS NOW:" + col);
+		
 		if (gridArray[row][col].getFix())
 		{
 			return getNextCell(row,col);
 		}
+		else if (col > 8 || row > 8)
+		{
+			return new int []  {0,0};
+			}
+	
 		else
 		{
 			return new int [] {row,col};
-		}
-		
-
-		
-		
+		}	
 	}
 	
-	private boolean checkBox (int row, int col, int val)
+	public boolean checkBox (int row, int col, int val)
 	{
 		boolean valid = true;
 		
@@ -200,6 +203,41 @@ public class Grid
 		}
 		
 		return valid;
+	}
+	
+	public boolean solveSudoku(int row, int col)
+	{
+		outputGrid();
+		
+		
+		System.out.println(row + " " + col);
+		
+		if (checkSolve())
+			return true;
+		
+		else
+		{
+			for (int val = 1; val < 10; val++)
+			{
+				if (validPos(row,col,val))
+				{
+					gridArray[row][col].setVal(val);
+					
+					int [] nextPos = getNextCell(row,col);
+					
+					if(solveSudoku(nextPos[0], nextPos[1]))   //If the rest of the board is now solvable using current value, return true, else set this to 0 and return false 
+						return true;
+					else
+						gridArray[row][col].setVal(0);
+						
+				}
+			}
+			
+			return false;
+			
+			
+		}
+		
 	}
 	
 
