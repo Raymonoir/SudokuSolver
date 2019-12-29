@@ -165,16 +165,16 @@ public class Grid
 			col++;
 		}
 		
-		//System.out.println("ROW IS NOW: " + row + "COL IS NOW:" + col);
+		System.out.println("ROW IS NOW: " + row + "COL IS NOW:" + col);
 		
-		if (gridArray[row][col].getFix())
+		if (col > 8 || row > 8)
+		{
+			return new int []  {0,0};
+		}
+		else if (gridArray[row][col].getFix())
 		{
 			return getNextCell(row,col);
 		}
-		else if (col > 8 || row > 8)
-		{
-			return new int []  {0,0};
-			}
 	
 		else
 		{
@@ -227,6 +227,7 @@ public class Grid
 					
 					if(solveSudoku(nextPos[0], nextPos[1]))   //If the rest of the board is now solvable using current value, return true, else set this to 0 and return false 
 						return true;
+					
 					else
 						gridArray[row][col].setVal(0);
 						
@@ -238,7 +239,10 @@ public class Grid
 			
 		}
 		
+		
 	}
+	
+	
 	
 
 
