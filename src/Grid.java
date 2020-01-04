@@ -1,31 +1,17 @@
 
 /**
  * 
- * @author raymonoir
+ * @author Raymond Ward
+ * @date 20/12/2019
  * 
  * 
- * i = row
- * j = column
+ * The class grid creates and maintains a 2x2 array of GridCells acting as a Sudoku Table.
  * 
  * 
- * 
- * BACKTRACKING ALGORITHM
- * 
- * if 0, increment
- * does 1 work, if yes move on,
- * if not keep incrementing 
- * 
- * if no values work, backtrack 
  * 
  * 
  *
  */
-
-
-
-
-
-
 
 public class Grid 
 {
@@ -165,11 +151,11 @@ public class Grid
 			col++;
 		}
 		
-		System.out.println("ROW IS NOW: " + row + "COL IS NOW:" + col);
+		//System.out.println("ROW IS NOW: " + row + "COL IS NOW:" + col);
 		
 		if (col > 8 || row > 8)
 		{
-			return new int []  {0,0};
+			return new int []  {0,0}; //
 		}
 		else if (gridArray[row][col].getFix())
 		{
@@ -204,31 +190,34 @@ public class Grid
 		
 		return valid;
 	}
-	
-	public boolean solveSudoku(int row, int col)
-	{
-		outputGrid();
-		
-		
-		System.out.println(row + " " + col);
-		
-		if (checkSolve())
+	/**
+	 * 
+	 * @param row - The row of the current working cell
+	 * @param col - The column of the current working cell
+	 * @return True if board is already solved or the rest of board can be solved using current cell value, false otherwise
+	 * 
+	 * This recursive function is called for each cell within the sudoku grid, then depending on the rest of the grid will return true or false
+	 * 
+	 */
+	public boolean backtrackCell(int row, int col)
+	{		
+		if (checkSolve())   //If no 0s left return true as sudoku is solved
 			return true;
 		
 		else
 		{
-			for (int val = 1; val < 10; val++)
+			for (int val = 1; val < 10; val++)   //For each cell, loop through the possible values (1,2,3...8,9)
 			{
-				if (validPos(row,col,val))
+				if (validPos(row,col,val))  //if that number can exist in that position
 				{
-					gridArray[row][col].setVal(val);
+					gridArray[row][col].setVal(val); //Set the value in grid
 					
-					int [] nextPos = getNextCell(row,col);
+					int [] nextPos = getNextCell(row,col); // Get the position of next available cell
 					
-					if(solveSudoku(nextPos[0], nextPos[1]))   //If the rest of the board is now solvable using current value, return true, else set this to 0 and return false 
+					if(backtrackCell(nextPos[0], nextPos[1]))   //If the rest of the board is now solvable using current value, return true,  
 						return true;
 					
-					else
+					else  //else set the value of current cell to 0 
 						gridArray[row][col].setVal(0);
 						
 				}
