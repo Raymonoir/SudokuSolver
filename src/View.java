@@ -13,12 +13,16 @@ public class View
 {
 	Dimension windowSize = new Dimension(900,500);
 	JFrame frame = new JFrame("Sudoku Solver");
+	int [][] unsolvedGrid;
+	SudokuCell [][] cellGrid;
 	
 	
 	
 	
-	View()
+	View(int [][] grid)
 	{
+		cellGrid = new SudokuCell[9][9];
+		unsolvedGrid = grid;
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
@@ -28,6 +32,7 @@ public class View
 		frame.setPreferredSize(windowSize);
 		createGrid();
 		frame.setVisible(true);
+		showSolve();
 		
 		
 	}
@@ -42,12 +47,27 @@ public class View
 		{
 			for (int y = 0; y < 9; y ++)
 			{
-				panel.add(new SudokuCell(x * 9 + y));
+				SudokuCell currentCell = new SudokuCell(x * 9 + y);
+				panel.add(currentCell);
+				cellGrid[x][y] = currentCell;
 			}
 		}
 		
 		frame.add(panel);
+	}
+	
+	public void showSolve()
+	{
+		Grid solve = new Grid(unsolvedGrid);
+		GridCell [][] solvedGrid = solve.returnSolve();
 		
+		for (int x = 0; x < 9; x ++)
+		{
+			for (int y = 0; y < 9; y ++)
+			{
+				cellGrid[x][y].cellLabel(solvedGrid[x][y].getVal());
+			}
+		}
 	}
 	
 	public  class SudokuCell extends JPanel implements MouseListener
@@ -57,16 +77,22 @@ public class View
 		 */
 		private static final long serialVersionUID = 1L;
 		private int  value;
+		JLabel cellLabel = new JLabel();
+		
 		
 		SudokuCell(int val)
 		{
+			this.add(cellLabel);
 			setBorder(BorderFactory.createLineBorder(Color.white, 2));
 			setBackground(Color.GRAY);
 			addMouseListener(this);
-			JLabel label1 = new JLabel();
-		    label1.setText(val + " ");
-		    this.add(label1);
-			value = val;
+			
+		}
+		
+		public void cellLabel (int val)
+		{
+			cellLabel.setText(val + " ");
+		    
 		}
 
 		@Override

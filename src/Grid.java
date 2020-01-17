@@ -27,6 +27,21 @@ public class Grid
 		
 	}
 	
+	public GridCell[][] returnSolve ()
+	{
+		if (gridArray[0][0].getFix())
+		{
+			int [] nextCell = getNextCell(0,0);
+			backtrackCell(nextCell[0],nextCell[1]);
+		}
+		else
+		{
+			backtrackCell(0,0);
+		}
+		
+		return gridArray;
+	}
+	
 	
 	private void formGridArray()
 	{
