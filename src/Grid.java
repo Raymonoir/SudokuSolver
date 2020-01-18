@@ -43,6 +43,8 @@ public class Grid
 	}
 	
 	
+	
+	
 	private void formGridArray()
 	{
 		gridArray  = new GridCell [9][9];
