@@ -9,14 +9,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 public class View 
 {
 
 	Font numFont = new Font("Serif", Font.BOLD, 30);
 	public static int lives = 3;
-	Dimension windowSize = new Dimension(660,760);
-	JFrame frame = new JFrame("Sudoku Solver");
+	Dimension frameSize = new Dimension(700,800);
+	
+	JFrame frame;
+	
 	int [][] unsolvedGrid;
 	SudokuCell [][] cellGrid;
 	GridCell [][] solvedGrid;
@@ -26,50 +29,57 @@ public class View
 	
 	View(int [][] grid)
 	{
-		cellGrid = new SudokuCell[9][9];
-		unsolvedGrid = grid;
 		
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setMaximumSize(windowSize);
-		frame.setMinimumSize(windowSize);
-		frame.setPreferredSize(windowSize);
-		frame.pack();
-		
-		solvedGrid = solve();
-		
-		createGrid();
-		
-		frame.setVisible(true);
-		
+		buildWindow();
 		
 		
 	}
 	
+	public void buildWindow()
+	{
+		frame = new JFrame();
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		Dimension frameSize = new Dimension(700,800);
+		
+		frame.setSize(frameSize);
+		frame.setMaximumSize(frameSize);
+		frame.setMinimumSize(frameSize);
+		frame.setPreferredSize(frameSize);
+		
+		JPanel outerPanel = new JPanel();
+		//outerPanel.opa
+		frame.getContentPane().add(outerPanel, BorderLayout.NORTH);
+		outerPanel.setLayout(null);
+		
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setDividerSize(2);
+		splitPane.setEnabled(false);
+		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		frame.getContentPane().add(splitPane, BorderLayout.CENTER);
+		
+		JPanel upperPanel = new JPanel();
+		upperPanel.setBackground(Color.PINK);
+		splitPane.setLeftComponent(upperPanel);
+		
+		JPanel lowerPanel = new JPanel();
+		lowerPanel.setBackground(Color.CYAN);
+		splitPane.setRightComponent(lowerPanel);
+		splitPane.setDividerLocation(100);
+		
+		frame.setVisible(true);
+	}
+	
 	public void createGrid()
 	{
-		JPanel outerPanel = new JPanel();
-		JPanel innerPanel = new JPanel();
-		Dimension panelSize = new Dimension(660,660);
-		
-		innerPanel.setMaximumSize(panelSize);
-		innerPanel.setMinimumSize(panelSize);
-		innerPanel.setPreferredSize(panelSize);
-		innerPanel.setLayout(new GridLayout(9,9));
-		innerPanel.setBackground(Color.blue);
-
-		outerPanel.add(innerPanel);
-		frame.add(outerPanel);
-		
-		
 		for (int x = 0; x < 9; x ++)
 		{
 			for (int y = 0; y < 9; y ++)
 			{
-				SudokuCell currentCell = new SudokuCell(unsolvedGrid[x][y],x,y);
-				innerPanel.add(currentCell);
-				cellGrid[x][y] = currentCell;
+				//SudokuCell currentCell = new SudokuCell(unsolvedGrid[x][y],x,y);
+				//innerPanel.add(currentCell);
+				//cellGrid[x][y] = currentCell;
 			}
 		}
 		
@@ -100,7 +110,7 @@ public class View
 		/**
 		 * 
 		 */
-		private Dimension cellSize = new Dimension(30,30);
+		private Dimension cellSize = new Dimension(31,31);
 		private static final long serialVersionUID = 1L;
 		private int  value;
 		JLabel cellLabel = new JLabel();
