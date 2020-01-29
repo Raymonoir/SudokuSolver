@@ -14,6 +14,7 @@ import javax.swing.JSplitPane;
 public class SudokuView {
 
 	private JFrame frame;
+	JPanel lowerPanel;
 
 	/**
 	 * Launch the application.
@@ -53,11 +54,6 @@ public class SudokuView {
 		frame.setMinimumSize(frameSize);
 		frame.setPreferredSize(frameSize);
 		
-		JPanel outerPanel = new JPanel();
-		outerPanel.setBackground(Color.BLUE);
-		frame.getContentPane().add(outerPanel, BorderLayout.NORTH);
-		outerPanel.setLayout(null);
-		
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setDividerSize(2);
 		splitPane.setEnabled(false);
@@ -68,12 +64,33 @@ public class SudokuView {
 		upperPanel.setBackground(Color.PINK);
 		splitPane.setLeftComponent(upperPanel);
 		
-		JPanel lowerPanel = new JPanel();
+		lowerPanel = new JPanel();
+		lowerPanel.setBorder(null);
 		lowerPanel.setBackground(Color.CYAN);
+		lowerPanel.setLayout(new GridLayout(9,9));
 		splitPane.setRightComponent(lowerPanel);
 		splitPane.setDividerLocation(100);
 		
+		createGrid();
+		
 		frame.setVisible(true);
+	}
+	
+	public void createGrid()
+	{
+		for (int x = 0; x < 9; x ++)
+		{
+			for (int y = 0; y < 9; y ++)
+			{
+				//SudokuCell currentCell = new SudokuCell(unsolvedGrid[x][y],x,y);
+				JPanel currentCell = new JPanel();
+				currentCell.setBackground(Color.YELLOW);
+				lowerPanel.add(currentCell);
+				//cellGrid[x][y] = currentCell;
+			}
+		}
+		
+		
 	}
 
 }
