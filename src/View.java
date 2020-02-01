@@ -134,9 +134,8 @@ public class View
 	{
 
 		private static final long serialVersionUID = 1L;
-		private int  value;
 		JLabel cellLabel = new JLabel();
-		int posx, posy;
+		private int posx, posy;
 		
 		
 		SudokuCell(int val,int posx,int posy)

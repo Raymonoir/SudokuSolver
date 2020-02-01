@@ -6,6 +6,7 @@
  * 
  * 
  * The class grid creates and maintains a 2x2 array of GridCells acting as a Sudoku Table.
+ * This class also contains the backtracking algorithm, which solves any sudoku.
  * 
  * 
  * 
@@ -27,6 +28,12 @@ public class Grid
 		
 	}
 	
+	
+	@SuppressWarnings("unused")
+	/**
+	 * returns the solved grid array
+	 * @return gridArray, solved sudoku
+	 */
 	public GridCell[][] returnSolve ()
 	{
 		if (gridArray[0][0].getFix())
@@ -44,7 +51,9 @@ public class Grid
 	
 	
 	
-	
+	/**
+	 * Creates array of GridCells, inputting value of cell
+	 */
 	private void formGridArray()
 	{
 		gridArray  = new GridCell [9][9];
@@ -60,15 +69,25 @@ public class Grid
 		}
 		
 	}
-	
-	public boolean validPos(int row, int col, int val)
+	/**
+	 * 
+	 * @param row, row of current cell
+	 * @param col, column of current cell
+	 * @param val, value of current cell
+	 * @return a boolean depending on if the value is valid in current cell depending on row, column and sub-box
+	 */
+	private boolean validPos(int row, int col, int val)
 	{
 		return checkRow(row,col,val) && checkColumn(row,col,val) && checkBox(row,col,val);
 	
 	}
 	
 	
-	public void outputGrid()
+	@SuppressWarnings("unused")
+	/**
+	 * Outputs sudoku to console
+	 */
+	private void outputGrid()
 	{
 		System.out.println("-------------------------");
 		for (int row = 0; row < 9; row ++)
@@ -83,8 +102,16 @@ public class Grid
 		
 		System.out.println();
 	}
-	
-	public boolean checkRow (int row, int col,int val)
+	/**
+	 * Checks if row is valid
+	 * 
+	 * @param row, row of current cell
+	 * @param col, column of current cell
+	 * @param val, value in the current cell
+	 * @return valid, a boolean depending on if val is valid in the given row
+	 * 
+	 */
+	private boolean checkRow (int row, int col,int val)
 	{
 		boolean valid = true;
 		
@@ -99,7 +126,15 @@ public class Grid
 		return valid;
 	}
 	
-	public boolean checkColumn (int row, int col, int val)
+	/**
+	 * Checks if column is valid
+	 * 
+	 * @param row, row of current cell
+	 * @param col, column of current cell
+	 * @param val, value in the current cell
+	 * @return valid, a boolean depending on if val is valid in the given column
+	 */
+	private boolean checkColumn (int row, int col, int val)
 	{
 		boolean valid = true;
 		for (int x = 0; x < numberGrid[row].length; x++)
@@ -116,7 +151,14 @@ public class Grid
 		
 	}
 	
-	public int [] getPreviousCell (int row, int col)
+	@SuppressWarnings("unused")
+	/**
+	 * 
+	 * @param row, row of current cell
+	 * @param col, column of current cell
+	 * @return array of closest previous not fixed cell
+	 */
+	private int [] getPreviousCell (int row, int col)
 	{
 		if (col == 0)
 		{
@@ -140,6 +182,10 @@ public class Grid
 		
 	}
 	
+	/**
+	 * This method checks if the sudoku is solved, by checking if any cells are not assigned
+	 * @return solved, depending on if sudoku is solved
+	 */
 	private boolean checkSolve ()
 	{
 		boolean solved = true;
@@ -155,8 +201,13 @@ public class Grid
 		return solved;
 	}
 	
-	
-	public int [] getNextCell (int row, int col)
+	/**
+	 * This gets the next cell that needs to be assigned a value, 
+	 * @param row, row of current cell
+	 * @param col, column of current cell
+	 * @return array of next cell co-ordinates
+	 */
+	private int [] getNextCell (int row, int col)
 	{
 		if (col == 8)
 		{
@@ -168,7 +219,6 @@ public class Grid
 			col++;
 		}
 		
-		//System.out.println("ROW IS NOW: " + row + "COL IS NOW:" + col);
 		
 		if (col > 8 || row > 8)
 		{
@@ -185,6 +235,13 @@ public class Grid
 		}	
 	}
 	
+	/**
+	 * This checks if the current cells sub-box is valid
+	 * @param row, row of current cell
+	 * @param col, column of current cell
+	 * @param val, value of current cell
+	 * @return valid, depending on if cell is valid in box or not
+	 */
 	public boolean checkBox (int row, int col, int val)
 	{
 		boolean valid = true;
