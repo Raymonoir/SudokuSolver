@@ -25,6 +25,7 @@ public class View
 	JFrame frame;
 	JPanel upperPanel;
 	JPanel lowerPanel;
+	JLabel upperPanelLabel;
 	
 	int [][] unsolvedGrid;
 	SudokuCell [][] cellGrid;
@@ -38,9 +39,22 @@ public class View
 		unsolvedGrid = grid;
 		cellGrid = new SudokuCell[9][9];
 		solvedGrid = solve();
+		upperPanelLabel = new JLabel();
 		
 		buildWindow();
 		
+		
+	}
+	
+	public void decreaseLives()
+	{
+		lives--;
+		upperPanelLabel.setText("Lives: " + lives);
+		
+		if (lives == 0)
+		{
+			System.exit(0);
+		}
 		
 	}
 	
@@ -66,10 +80,11 @@ public class View
 		
 		upperPanel = new JPanel();
 		upperPanel.setBackground(Color.PINK);
+		upperPanel.add(upperPanelLabel);
+		upperPanelLabel.setText("" + lives);
 		splitPane.setLeftComponent(upperPanel);
 		
 		lowerPanel = new JPanel();
-		//lowerPanel.setBackground(Color.CYAN);
 		lowerPanel.setLayout(new GridLayout(9,9));
 		lowerPanel.setBorder(null);
 		splitPane.setRightComponent(lowerPanel);
@@ -88,8 +103,6 @@ public class View
 			for (int y = 0; y < 9; y ++)
 			{
 				SudokuCell currentCell = new SudokuCell(unsolvedGrid[x][y],x,y);
-				//JPanel currentCell = new JPanel();
-				//currentCell.setBackground(Color.YELLOW);
 				lowerPanel.add(currentCell);
 				cellGrid[x][y] = currentCell;
 			}
@@ -119,10 +132,7 @@ public class View
 	
 	public  class SudokuCell extends JPanel
 	{
-		/**
-		 * 
-		 */
-		//private Dimension cellSize = new Dimension(31,31);
+
 		private static final long serialVersionUID = 1L;
 		private int  value;
 		JLabel cellLabel = new JLabel();
@@ -161,7 +171,6 @@ public class View
 					{
 						int buttonVal = i * 3 + j+1;
 						JButton currentButton = new JButton("" + buttonVal);
-						//currentButton.setSize(4, 4);
 						
 						currentButton.addActionListener( source -> 
 						{
@@ -179,9 +188,10 @@ public class View
 							}
 							else
 							{
-								//System.out.println(buttonVal);
+								decreaseLives();
 								currentButton.setVisible(false);
 								this.setBackground(new Color(255,102,102));
+								
 								
 								
 							}
