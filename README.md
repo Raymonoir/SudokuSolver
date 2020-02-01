@@ -33,8 +33,10 @@ The graph you wish to used must be assigned to a variable and the 'Main' class m
 <h1> Major Lessons Learnt</h1>
 1.	The more documentation the better.  During this task I took a break for Christmas and the hectic start to the second year of my university course, when I finally returned, I did not leave enough detail in the documentation for me to understand without taking time to remind myself. 
 <br>
+<br>
 2.	Use a more 'friendly' GUI framework. I found using java's GUI framework rather clunky and hard to work with. This caused my motivation to diminish when creating the GUI as it was not a challenge it was just a nuisance. 
 <br>  
+<br>
 3.	Planning with larger projects is key. Once completing this project and looking through the code I found I could think of different, perhaps more efficient ways of completing the same tasks. If I had done some minor planning ahead of time, I feel as though I would have been able to put these different ways into practice.
 
 
