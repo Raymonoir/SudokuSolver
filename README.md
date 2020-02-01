@@ -26,9 +26,9 @@ The graph you wish to used must be assigned to a variable and the 'Main' class m
 
 
 <h1>Possible additions </h1>
-1. Adittions and tidied up GUI
-2. Allow user to input any sudoku via given GUI
-3. Options menu with different options for the user.
+1. Adittions and tidied up GUI <br>
+2. Allow user to input any sudoku via given GUI <br>
+3. Options menu with different options for the user. <br>
 
 <h1> Major Lessons Learnt</h1>
 1.	The more documentation the better.  During this task I took a break for Christmas and the hectic start to the second year of my university course, when I finally returned, I did not leave enough detail in the documentation for me to understand without taking time to remind myself. 
