@@ -7,10 +7,7 @@
  * 
  * The class grid creates and maintains a 2x2 array of GridCells acting as a Sudoku Table.
  * This class also contains the backtracking algorithm, which solves any sudoku.
- * 
- * 
- * 
- * 
+
  *
  */
 
